@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>웹카페</title>
+    <style>
+        ul, li, dl, dt, dd {padding: 0; margin: 0; list-style: none;}
+        .menu_box ul {display: flex;}
+        .menu_box li {position: relative; display: inline-block; width: 200px; height: 250px; border: 1px solid #000; text-align: center;}
+        .menu_box img {display: inline-block; width: 50%; height: 50%; padding-bottom: 30px;}
+        .menu_box dl {position: absolute; width: 100%; bottom: 0; text-align: center;}
+    </style>
+</head>
+<body>
+    <div class="menu_box">
+        <h1>WEB CAFE</h1>
+        <h2>주문하는곳</h2>
+        <ul class="menu">
+            <li>
+                <dl>
+                    <img src="img/sb2.png" alt="">
+                    <dt>아메리카노</dt>
+                    <dd>2000원</dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>카푸치노</dt>
+                    <dd>3000원</dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>카페라떼</dt>
+                    <dd>3500원</dd>
+                </dl>
+            </li>
+            <li>
+                <dl>
+                    <dt>초코라떼</dt>
+                    <dd>3000원</dd>
+                </dl>
+            </li>
+        </ul>
+        <h2>음료 받는곳</h2>
+        <span class="msg_box"></span>
+    </div>
+    <script>
+        // 음료(li) 선택 : 아이스'음료명'를 주문하시겠습니까?
+        // confirm() : true,false값만 얻을 수 있음
+        // 확인(네) > '음료명'를 몇잔드릴까요?
+            //prompt() : input에 입력가능
+        // 확인(네) > 결제금액은 '얼마~'입니다.
+        // 확인(네) > 결제금액 입력하고
+            //prompt() : input에 입력가능
+
+        // 음료 받는 곳에 '음료'가 준비되었습니다. >> 반복문
+
+        let menuItems = document.querySelectorAll('.menu li');
+        let msgBox = document.querySelector('.msg_box');
+        // console.log(userChoice);
+        // console.log(price);
+        
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                let drinkName = item.querySelector('.menu dt');
+                let drinkPrice = item.querySelector('.menu dd');
+                let userChoice = drinkName.innerText;
+                let price = drinkPrice.innerText.slice(0,4);
+
+                let orderConfirm = confirm('아이스 ' + userChoice + '를 주문하시겠습니까?');
+                if (orderConfirm) {
+                    let quantity = prompt(userChoice+'를 몇잔드릴까요?');
+                    if (quantity) {
+                        let pricePerCup = price;
+                        let totalCost = quantity * pricePerCup;
+                        let paymentAmount = prompt('결제금액은 ' + totalCost + '원 입니다.');
+                        if (paymentAmount) {
+                            // alert('음료 받는 곳에 ' + userChoice + '가 준비되었습니다.');
+                            msgBox.innerText = '음료 받는 곳에 아이스 ' + userChoice + '가 준비되었습니다.';
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
